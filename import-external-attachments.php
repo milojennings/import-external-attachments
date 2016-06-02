@@ -340,7 +340,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	function external_image_backcatalog () {
 
-		$posts = get_posts( array( 'numberposts'=>-1 ) );
+		$posts = external_image_get_post_list();
 		echo '<h4>Processing Posts...</h4>';
 
 		set_time_limit(300);
@@ -382,7 +382,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	function external_image_get_backcatalog () {
 
-		$posts = get_posts( array( 'numberposts' => -1 ) );
+		$posts = external_image_get_post_list();
 
 		$count_posts = 0;
 		$posts_to_import = array();
@@ -412,19 +412,34 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	}
 
 
+	function external_image_get_post_list(){
 
+		$post_types = external_image_get_post_type_list();
+		$post_types[] = 'post';
+		$post_types[] = 'page';
 
-			} else {
-				$html .= "<p>We didn't find any external attachments to import. You're all set!</p>";
+		$args = array(
+			'post_type' => $post_types,
+			'post_status' => 'publish',
+			'posts_per_page' => -1,
+		);
 
-			}
-			$html .= '</div>';
+		$posts = new WP_Query($args);
 
-			echo $html;
+		return $posts;
+	}
+	function external_image_get_post_type_list(){
+		$args = array(
+		   'public'   => true,
+		   '_builtin' => false
+		);
 
-		?>
+		$post_types = get_post_types( $args, 'names', 'and');
 
-	</div>
-</div>
-	<?php
+		foreach ( $post_types as $post_type ) {
+			$post_types_array[] = $post_type;
+		}
+		
+		echo "<pre>".print_r($post_types_array, true)."</div>";
+		return $post_types_array;
 	}
