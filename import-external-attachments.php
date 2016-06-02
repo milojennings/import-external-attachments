@@ -440,6 +440,5 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			$post_types_array[] = $post_type;
 		}
 		
-		echo "<pre>".print_r($post_types_array, true)."</div>";
 		return $post_types_array;
 	}

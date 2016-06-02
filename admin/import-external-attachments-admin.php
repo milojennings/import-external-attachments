@@ -53,16 +53,7 @@
 
 		<?php
 
-			external_image_get_post_type_list();
-
 			$posts = external_image_get_post_list();
-
-			echo "<h3>custom posts</h3>";
-			var_dump( $posts );
-
-			echo "<h3>normal posts</h3>";
-			$posts = get_posts( array( 'numberposts'=>-1 ) );
-			var_dump( $posts );
 
 			$count = 0;
 			foreach( $posts as $this_post ) {
